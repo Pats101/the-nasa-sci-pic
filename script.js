@@ -10,6 +10,7 @@ const apiKey = 'DEMO_KEY';
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 let resultsArray = [];
+let favourites = {};
 
 function updateDOM() {
     resultsArray.forEach((result) => {
@@ -38,6 +39,7 @@ function updateDOM() {
         const saveText = document.createElement('p');
         saveText.classList.add('clickable');
         saveText.textContent = 'Add to Favourites';
+        saveText.setAttribute('onclick', `saveFavourite('${result.url}')`);
         // Card Text
         const cardText = document.createElement('p');
         cardText.textContent = result.explanation;
@@ -59,6 +61,23 @@ function updateDOM() {
         card.append(link, cardBody);
         imagesContainer.appendChild(card);
 
+    });
+}
+
+// Add result to Favourites
+function saveFavourite(itemUrl) {
+    // Loop through Results Array to select Favourite
+    resultsArray.forEach((item) => {
+        if(item.url.includes(itemUrl) && !favourites[itemUrl]){
+            favourites[itemUrl] = item;
+            // Show Save Confirmation for 2 Seconds
+            saveConfirmed.hidden = false;
+            setTimeout(() => {
+                saveConfirmed.hidden = true;
+            }, 2000);
+            // Set Favourites in localStorage
+            localStorage.setItem('nasaFavourites', JSON.stringify(favourites));
+        }
     });
 }
 
