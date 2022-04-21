@@ -13,10 +13,7 @@ let resultsArray = [];
 let favourites = {};
 
 function showContent(page) {
-    window.scrollTo({
-        top: 0,
-        behavior: 'instant'
-    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
     if(page === 'results') {
         resultsNav.classList.remove('hidden');
         favouritesNav.classList.add('hidden');
@@ -133,7 +130,6 @@ async function getNasaPics() {
         console.log(err);
     }
 }
-
 
 // On Load
 getNasaPics();
